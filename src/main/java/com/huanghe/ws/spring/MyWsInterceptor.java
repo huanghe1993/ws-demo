@@ -1,0 +1,34 @@
+package com.huanghe.ws.spring;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
+
+import javax.websocket.Session;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * WS握手拦截器
+ */
+@Slf4j
+@Component
+public class MyWsInterceptor extends HttpSessionHandshakeInterceptor {
+    @Override
+    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+        log.info(request.getRemoteAddress().toString()+"开始握手");
+        return super.beforeHandshake(request, response, wsHandler, attributes);
+    }
+
+    @Override
+    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception ex) {
+        log.info(request.getRemoteAddress().toString()+"完成握手");
+        // 完成握手之后就会把http协议升级为websocket协议
+        super.afterHandshake(request, response, wsHandler, ex);
+    }
+}

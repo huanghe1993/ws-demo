@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebScoket客户端</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    ws = new WebSocket("ws://localhost:8080/myWs1")
+    ws.onopen = function () {
+        ws.send("hello client")
+    }
+    ws.onmessage = function (message) {
+        console.log(message.data)
+    }
+</script>
+</html>
